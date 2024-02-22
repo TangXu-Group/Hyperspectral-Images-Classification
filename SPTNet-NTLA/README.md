@@ -14,7 +14,8 @@ This repository provides the code for the method in our paper '**Spatial Pooling
 >python 3.7<br>
 >torch 1.12.1<br>
 >scikit-learn 1.0.2<br>
->numpy
+>numpy<br>
+>einops
 
 ## Train
 
