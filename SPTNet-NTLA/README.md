@@ -11,8 +11,8 @@ This repository provides the code for the method in our paper '**Spatial Pooling
 
 ## Requirements
 
->Python 3.7<br>
->PyTorch 1.12.1<br>
+>python 3.7<br>
+>torch 1.12.1<br>
 >scikit-learn 1.0.2<br>
 >numpy
 
