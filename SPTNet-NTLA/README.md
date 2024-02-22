@@ -6,7 +6,7 @@ This repository provides the code for the method in our paper '**Spatial Pooling
 
 ## Datasets
 
-We conduct experiments on the Indian Pines, University of Pavia, and Houston datasets. To train and test our model, you should download the corresponding dataset and modify the "*data_path*" in *main.py* to suit your needs.
+We conduct experiments on the Indian Pines, University of Pavia, and Houston datasets. To train and test our model, you should download the required data set and modify the corresponding parameters in *main.py* to meet your needs.
 
 ## Requirements
 
