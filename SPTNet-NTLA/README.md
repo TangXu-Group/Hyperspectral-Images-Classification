@@ -1,41 +1,20 @@
-# WNet
+# SPTNet-NTLA
 
-This repository provides the code for the methods and experiments presented in our paper '**WNet: W-shaped Hierarchical Network for Remote Sensing Image Change Detection**'. (TGRS2023)
+This repository provides the code for the method in our paper '**Spatial Pooling Transformer Network and Noise-Tolerant Learning for Noisy Hyperspectral Image Classification**'. (TGRS2024)
 
-**If you have any questions, you can send me an email. My mail address is 21181214261@stu.xidian.edu.cn.**
+**If you have any questions, you can send me an email. My mail address is 22171214790@stu.xidian.edu.cn.**
 
 ## Datasets
 
-Download the building change detection dataset. 
-
-- [SVCD](https://drive.google.com/file/d/1GX656JqqOyBi_Ef0w65kDGVto-nHrNs9/edit)
-- [WHU-CD](https://study.rsgis.whu.edu.cn/pages/download/)
-- [LEVIR-CD](https://justchenhao.github.io/LEVIR/)
-- [SYSU-CD](https://github.com/liumency/SYSU-CD)
-
-Prepare datasets into following structure,
-
-```
-├─Train
-    ├─A
-    ├─B
-    ├─label
-├─Val
-    ├─A
-    ├─B
-    ├─label
-├─Test
-    ├─A
-    ├─B
-    ├─label
-```
-
-In the following experiments, each image in the dataset is pre-cropped into multiple image patches of size 256 × 256.
+    We conduct the experiments on the Indian Pines, University of Pavia, and Houston datasets. To train and test our model, you should 
+    download the data set and modify image's path according to your needs.
 
 ## Requirements
 
 >Python 3.7<br>
->PyTorch 1.7.1
+>PyTorch 1.12.1
+>scikit-learn 1.0.2
+numpy
 
 ## Preparation
 
