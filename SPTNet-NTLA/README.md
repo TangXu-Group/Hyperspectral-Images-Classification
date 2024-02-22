@@ -17,7 +17,7 @@ We conduct experiments on the Indian Pines, University of Pavia, and Houston dat
 >einops
 
 ## Train
-
+Before training, the superpixel segmentation map of the corresponding data set should be placed in the *segment* directory. Then by executing the following command, the experimental results can be obtained.
 ```python
 python main.py
 ```
