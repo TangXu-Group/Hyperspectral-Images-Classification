@@ -19,5 +19,5 @@ This repository provides the code for the method in our paper '**Spatial Pooling
 ## Train
 
 ```python
-python train.py
+python main.py
 ```
