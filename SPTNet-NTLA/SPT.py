@@ -87,9 +87,6 @@ class Encoder(nn.Module):
 
 class Transformer(nn.Module):
     def __init__(self,patch_size=[9,7,5,3], dim=64, hidden_dim=8, head_dim=64, heads=8, depth=4, dropout=0.1):
-        """
-        Parameters:输入维数,全连接隐层维数,kqv维数,多头数,编码器个数,丢弃率
-        """
         super().__init__()
 
         self.depth = depth
