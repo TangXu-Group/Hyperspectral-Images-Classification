@@ -3,7 +3,7 @@
 This repository provides the code for the method in our paper '**Spatial Pooling Transformer Network and Noise-Tolerant Learning for Noisy Hyperspectral Image Classification**'. (TGRS2024)
 
 
-![本地路径](flowchart.png )
+![本地路径](flowchart.svg)
 
 **If you have any questions, you can send me an email. My mail address is 22171214790@stu.xidian.edu.cn.**
 
