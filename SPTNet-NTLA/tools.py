@@ -10,6 +10,7 @@ from sklearn import preprocessing
 from copy import deepcopy
 from sklearn.decomposition import PCA
 
+
 ############### Indian Pines
 IP_num = {
     '1': 35,
