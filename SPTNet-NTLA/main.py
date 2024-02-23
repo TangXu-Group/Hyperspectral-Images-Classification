@@ -58,7 +58,7 @@ def seed_torch(seed):
     torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
     np.random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)  # 为了禁止hash随机化，使得实验可复现
+    os.environ['PYTHONHASHSEED'] = str(seed) 
     os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
     os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
     torch.backends.cudnn.benchmark = False
@@ -66,9 +66,6 @@ def seed_torch(seed):
 seed_torch(args.seed)
 
 use_cuda = torch.cuda.is_available()
-
-def save_checkpoint(state, filename='./checkpoint.pth.tar'):
-    torch.save(state, filename)
 
 def build_dataset():
 
@@ -227,9 +224,6 @@ from sklearn.mixture import GaussianMixture
 CE = nn.CrossEntropyLoss(reduction='none')
 
 def eval_train(model):  
-    """ 对训练样本的损失建模，得到每一个样本正确与否的概率
-     
-     """
     model.eval()
     losses = torch.zeros(len(train_loader.dataset))   
     
@@ -245,9 +239,9 @@ def eval_train(model):
     losses = (losses-losses.min())/(losses.max()-losses.min())    
     input_loss = losses.reshape(-1,1)
     
-    # fit a two-component GMM to the loss
+
     gmm = GaussianMixture(n_components=2,max_iter=15,tol=1e-2,reg_covar=5e-4)
-    gmm.fit(input_loss)         ### input_loss: 归一化的损失 shape:(N,1)
+    gmm.fit(input_loss)      
     prob = gmm.predict_proba(input_loss) 
     
     prob = prob[:,gmm.means_.argmin()]         
@@ -277,64 +271,53 @@ def acc_reports(y_test, y_pred_test):
 LABEL_VALUES, in_c, train_loader, test_loader, all_loader, noise_or_not = build_dataset()
 
 print(args)
-confuse_m = np.ones((args.iters,args.num_class,args.num_class))
 
-last = []
-for i in range(args.iters):
-    print("Iter:%d\n"%(i+1))
+print("################################################\n")
 
-    print("################################################\n")
-
-    net1 = SPT(patch_size=args.Patch_size, input_dim=in_c,num_classes=args.num_class,heads=args.head)
-    net2 = SPT(patch_size=args.Patch_size, input_dim=in_c,num_classes=args.num_class,heads=args.head)
-    if use_cuda:
-        net1.cuda()
-        net2.cuda()
-        
-    optimizer_net1 = optim.Adam(net1.parameters(), lr=args.lr, weight_decay=1e-4)
-    optimizer_net2 = optim.Adam(net2.parameters(), lr=args.lr, weight_decay=1e-4)
-
-
-    scheduler1 = torch.optim.lr_scheduler.StepLR(optimizer_net1, step_size=args.num_epochs//args.num_adjust, gamma=args.gamma)
-    scheduler2 = torch.optim.lr_scheduler.StepLR(optimizer_net2, step_size=args.num_epochs//args.num_adjust, gamma=args.gamma)
-
-    t_pre = []
-
-    import time
-    start = time.time()
-    for epoch in range(1,1+args.num_epochs):
-
-        if epoch<=args.warmup:
-            warmup(epoch,net1,optimizer_net1)
-            warmup(epoch,net2,optimizer_net2)
-
-            scheduler1.step()
-            scheduler2.step()
-
-        else:
-            prob1 = eval_train(net1)   
-            prob2 = eval_train(net2)
-
-            pred1 = (prob1 > args.p_threshold)     # pred 为 每个样本clean与否
-            pred2 = (prob2 > args.p_threshold) 
-
-            # print('Net1:',pred1.sum(),(pred1==noise_or_not).sum())
-            # print('Net2:',pred2.sum(),(pred2==noise_or_not).sum())
-
-            train_acc1, train_acc2 = train(epoch)
-            scheduler1.step()
-            scheduler2.step()
-            
-    end = time.time()
-    total = end-start
-    print('total: ',total)
+net1 = SPT(patch_size=args.Patch_size, input_dim=in_c,num_classes=args.num_class,heads=args.head)
+net2 = SPT(patch_size=args.Patch_size, input_dim=in_c,num_classes=args.num_class,heads=args.head)
+if use_cuda:
+    net1.cuda()
+    net2.cuda()
     
-    test_acc,y_test,y_pre = last_test()
-    last.append(test_acc)
-    oa, confusion, each_acc, aa, kappa = acc_reports(y_test, y_pre)
-    confuse_m[i] = confusion
+optimizer_net1 = optim.Adam(net1.parameters(), lr=args.lr, weight_decay=1e-4)
+optimizer_net2 = optim.Adam(net2.parameters(), lr=args.lr, weight_decay=1e-4)
 
-    save_dir = './checkpoint/'+args.Dataset
-    os.makedirs(save_dir, exist_ok=True)
 
-np.save('./checkpoint/'+args.Dataset+'/'+'confusion_'+str(args.noise_ratio)+'.npy',confuse_m)
+scheduler1 = torch.optim.lr_scheduler.StepLR(optimizer_net1, step_size=args.num_epochs//args.num_adjust, gamma=args.gamma)
+scheduler2 = torch.optim.lr_scheduler.StepLR(optimizer_net2, step_size=args.num_epochs//args.num_adjust, gamma=args.gamma)
+
+t_pre = []
+
+import time
+start = time.time()
+for epoch in range(1,1+args.num_epochs):
+
+    if epoch<=args.warmup:
+        warmup(epoch,net1,optimizer_net1)
+        warmup(epoch,net2,optimizer_net2)
+
+        scheduler1.step()
+        scheduler2.step()
+
+    else:
+        prob1 = eval_train(net1)   
+        prob2 = eval_train(net2)
+
+        pred1 = (prob1 > args.p_threshold)   
+        pred2 = (prob2 > args.p_threshold) 
+
+        # print('Net1:',pred1.sum(),(pred1==noise_or_not).sum())
+        # print('Net2:',pred2.sum(),(pred2==noise_or_not).sum())
+
+        train_acc1, train_acc2 = train(epoch)
+        scheduler1.step()
+        scheduler2.step()
+        
+end = time.time()
+total = end-start
+print('training time: ',total)
+
+test_acc,y_test,y_pre = last_test()
+oa, confusion, each_acc, aa, kappa = acc_reports(y_test, y_pre)
+print('OA: {:.2f}%, AA: {:.2f}%, Kappa: {:.2f}%'.format(oa, aa, kappa))
