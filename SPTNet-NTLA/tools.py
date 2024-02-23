@@ -8,8 +8,6 @@ from tqdm import tqdm
 from numpy.testing import assert_array_almost_equal
 from sklearn import preprocessing
 from copy import deepcopy
-from sklearn.decomposition import PCA
-
 
 ############### Indian Pines
 IP_num = {
@@ -310,7 +308,6 @@ class HyperX(torch.utils.data.Dataset):
             c_indices = np.nonzero(self.label == c)
             X = list(zip(*c_indices))
             self.indices += X
-        # random.shuffle(self.indices)
         self.indices = np.asarray(self.indices)
         self.xy1 = self.indices - self.patch_size // 2
         self.xy2 = self.xy1 + self.patch_size
