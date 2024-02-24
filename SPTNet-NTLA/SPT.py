@@ -58,7 +58,6 @@ class Encoder(nn.Module):
             nn.GELU(),
             nn.Linear(dim//2,dim)
         )
-        # self.mlp = nn.Linear(dim,dim)
         self.dropout = nn.Dropout(dropout)
 
     def forward(self,x,mask):
