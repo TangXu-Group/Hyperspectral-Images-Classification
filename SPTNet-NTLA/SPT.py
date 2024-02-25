@@ -52,12 +52,7 @@ class Encoder(nn.Module):
         self.heads = heads
         
         self.to_qkv = nn.Linear(dim,3*head_dim)
-        self.mlp = nn.Sequential(
-            nn.Linear(dim,dim//2),
-            nn.LayerNorm(int(dim // 2)),
-            nn.GELU(),
-            nn.Linear(dim//2,dim)
-        )
+        self.mlp = nn.Linear(dim,dim)
         self.dropout = nn.Dropout(dropout)
 
     def forward(self,x,mask):
