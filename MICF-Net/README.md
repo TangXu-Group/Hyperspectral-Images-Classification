@@ -1,4 +1,4 @@
-# SPTNet-NTLA
+# MICF-Net
 
 This repository provides the code for the method in our paper '**Multiple Information Collaborative Fusion Network for Joint Classification of Hyperspectral and LiDAR Data**'. (TGRS2024)
 
