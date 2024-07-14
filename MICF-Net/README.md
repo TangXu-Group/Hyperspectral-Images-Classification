@@ -1,6 +1,6 @@
 # SPTNet-NTLA
 
-This repository provides the code for the method in our paper '**Spatial Pooling Transformer Network and Noise-Tolerant Learning for Noisy Hyperspectral Image Classification**'. (TGRS2024)
+This repository provides the code for the method in our paper '**Multiple Information Collaborative Fusion Network for Joint Classification of Hyperspectral and LiDAR Data**'. (TGRS2024)
 
 ![本地路径](flowchart.png )
 
@@ -8,7 +8,7 @@ This repository provides the code for the method in our paper '**Spatial Pooling
 
 ## Datasets
 
-We conduct experiments on the Indian Pines, University of Pavia, Houston and Houston2018 datasets. To train and test our model, you should download the required data set and modify the corresponding parameters in *main.py* to meet your needs.
+We conduct experiments on the Houston, MUUFL and Trento datasets. To train and test our model, you should download the required data set and modify the corresponding parameters in *main.py* to meet your needs.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ We conduct experiments on the Indian Pines, University of Pavia, Houston and Hou
 >einops
 
 ## Train
-Before training, the superpixel segmentation map of the corresponding data set should be placed in the *segment* directory. Then by executing the following command, the experimental results can be obtained.
+By executing the following command, the experimental results can be obtained.
 ```python
-python main.py
+sh run.sh
 ```
