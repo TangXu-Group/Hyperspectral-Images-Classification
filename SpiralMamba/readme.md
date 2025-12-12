@@ -4,11 +4,13 @@ This repository provides the code for the method in our paper '**SpiralMamba: Sp
 
 ![本地路径](flowchart.png )
 
-**If you have any questions, you can send me an email. My mail address is yukiyao@stu.xidian.edu.cn.**
+**If you have any questions, you can send me an email. My mail address is yuki.666@qq.com.**
 
 ## Datasets
 
 We conduct experiments on the Indian Pines, Pavia University, Houston2013 and Houston2018 datasets. To train and test our model, you should download the required data set and modify the corresponding parameters in *main.py* to meet your needs.
+
+The datasets and optimal checkpoints can be obtained [here](https://drive.google.com/drive/folders/1uNogdFmxFVSx2qmEeIxE-aB0IjzfXJrN?usp=sharing).
 
 ## Requirements
 
